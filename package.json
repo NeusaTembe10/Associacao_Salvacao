@@ -1,5 +1,5 @@
 {
-  "homepage": "https://github.com/NeusaTembe10/Associacao_Salvacao/",
+  "homepage": "https://NeusaTembe10.github.io/Associacao_Salvacao/",
   "name": "as",
   "private": true,
   "version": "0.0.0",
@@ -8,9 +8,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+     "start": "react-scripts start",
     "preview": "vite preview",
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+  "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",

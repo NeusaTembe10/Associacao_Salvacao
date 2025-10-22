@@ -9,7 +9,7 @@ export default function AdminLogin() {
     e.preventDefault();
     // Autentica admin via backend
     console.log("Tentando login admin", username);
-    fetch("/api/admin/login", {
+    fetch("https://as-production-e22a.up.railway.app/api/auth/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),

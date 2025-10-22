@@ -47,8 +47,7 @@ export default function SignUp({
       setPasswordError("");
     }
     // Usa IP local para testes em rede local
-    const apiUrl = `http://${LOCAL_IP}:5000`;
-    const res = await fetch(`${apiUrl}/api/auth/register`, {
+    const res = await fetch(`https://as-production-e22a.up.railway.app/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
