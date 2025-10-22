@@ -38,10 +38,6 @@ export default function AppRoutes({
           <Route path="/Home" element={<Home />} />
           <Route path="*" element={<InitialPage />} />
           <Route path="/forget" element={<ForgetPassword />} key="forget" />
-          <Route
-            path="auth/callback"
-            element={<OAuthCallbackHandler showToast={showToast} />}
-          />
           <Route path="/verification" element={<VerificationPage />} />
           <Route path="/help" element={<Help />} />
           <Route path="/about" element={<About />} />
@@ -58,6 +54,7 @@ export default function AppRoutes({
           <Route path="/admin-news" element={<AdminNovidade />} />
           <Route path="/admin-profile" element={<AdminProfile />} />
           <Route path="/help/create-account" element={<CreatAcount />} />
+          <Route path="/auth/callback" element={<OAuthCallbackHandler showToast={showToast} />} />
           <Route path="/help/content-categories" element={<CreatetCategory />} />
         </Routes>
       </BrowserRouter>

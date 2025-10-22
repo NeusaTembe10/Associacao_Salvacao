@@ -20,7 +20,7 @@ export const OAuthCallbackHandler = ({
     }
 
     if (code) {
-      fetch("http://localhost/google-auth/auth-google.php", {
+      fetch("https://as-production-e22a.up.railway.app/api/auth/google", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),
@@ -51,3 +51,5 @@ export const OAuthCallbackHandler = ({
 
   return null; // Não renderiza nada durante o callback
 };
+
+export default OAuthCallbackHandler;
