@@ -7,7 +7,7 @@ interface ButtonProps {
 
 const Category = ({ text, icon, onClick, customClass }: ButtonProps) => {
   const colorCategory: { [key: string]: string } = {
-    Livros: "#C4F1CD",
+    Biblioteca: "#C4F1CD",
     Fotos: "#1B4332",
     "Videos e audios": "#38BDF8",
     Pregações: "#007F91",

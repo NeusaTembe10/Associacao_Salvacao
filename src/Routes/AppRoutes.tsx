@@ -22,7 +22,6 @@ import AdminNovidade from "../Admin/AdminNovidade";
 import AdminProfile from "../Admin/AdminProfile";
 import CreatAcount from "../Pages/Help/CreateAcount";
 import CreatetCategory from "../Pages/Help/ContetCategory";
-
 export default function AppRoutes({
   showToast,
 }: {

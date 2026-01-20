@@ -7,10 +7,10 @@ import { useState, useEffect } from "react";
 
 const categoryTypes = [
   { label: "Todos", value: "all" },
-  { label: "Livros", value: "Livros" },
   { label: "Fotos", value: "Fotos" },
   { label: "Videos e audios", value: "Videos e audios" },
   { label: "Pregações", value: "Pregações" },
+  { label: "Biblioteca", value: "Biblioteca" },
 ];
 
 const Home = ({

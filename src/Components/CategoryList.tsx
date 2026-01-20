@@ -1,7 +1,7 @@
 import { BiBookOpen } from "react-icons/bi";
 import { FaCamera, FaHeadphones } from "react-icons/fa";
 import { MdBookmark } from "react-icons/md";
-import Category from "./Category"; // seu componente com SVG
+import Category from "./Category";
 import { useNavigate } from "react-router-dom";
 
 interface CategoryListProps {
@@ -9,10 +9,25 @@ interface CategoryListProps {
 }
 
 const categories = [
-  { text: "Livros", icon: <BiBookOpen />, route: "/livros" },
-  { text: "Fotos", icon: <FaCamera />, route: "/fotos" },
-  { text: "Videos e audios", icon: <FaHeadphones />, route: "/videoseaudios" },
-  { text: "Pregações", icon: <MdBookmark />, route: "/pregacoes" },
+  { text: "Fotos", icon: <FaCamera />, route: "/fotos", external: false },
+  {
+    text: "Videos e audios",
+    icon: <FaHeadphones />,
+    route: "/videoseaudios",
+    external: false,
+  },
+  {
+    text: "Pregações",
+    icon: <MdBookmark />,
+    route: "/pregacoes",
+    external: false,
+  },
+  {
+    text: "Biblioteca",
+    icon: <BiBookOpen />,
+    route: "https://antanaz.github.io/Livraria-test/loja/loja.html",
+    external: true,
+  },
 ];
 
 const CategoryList = ({ filter = "all" }: CategoryListProps) => {
@@ -21,6 +36,17 @@ const CategoryList = ({ filter = "all" }: CategoryListProps) => {
     filter === "all"
       ? categories
       : categories.filter((cat) => cat.text === filter);
+
+  const handleClick = (route: string, external: boolean) => {
+    if (external) {
+      // Link externo
+      window.location.href = route;
+    } else {
+      // Link interno
+      navigate(route);
+    }
+  };
+
   return (
     <div>
       {filtered.map((cat, idx) => (
@@ -31,7 +57,7 @@ const CategoryList = ({ filter = "all" }: CategoryListProps) => {
           <Category
             text={cat.text}
             icon={cat.icon}
-            onClick={() => navigate(cat.route)}
+            onClick={() => handleClick(cat.route, cat.external)}
           />
         </div>
       ))}
