@@ -48,7 +48,7 @@ export default function AppRoutes({
           <Route path="/missao" element={<Missao />} />
           <Route path="/rede" element={<Rede />} />
           <Route path="/perfil" element={<Perfil />} />
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/admin-news" element={<AdminNovidade />} />
           <Route path="/admin-profile" element={<AdminProfile />} />

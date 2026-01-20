@@ -58,7 +58,7 @@ if (!localStorage.getItem("token")) {
   };
 
   return (
-    <div className="p-5 flex flex-col gap-7">
+    <div className="p-6 flex flex-col gap-7">
       <Nav />
       {hasNew && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[9999] bg-[#064648] text-white px-6 py-4 rounded-xl shadow-lg flex flex-col items-center gap-2 animate-fadeIn">

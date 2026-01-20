@@ -1,45 +1,65 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../Components/Input";
+
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  function handleLogin(e: React.FormEvent) {
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    // Autentica admin via backend
-    console.log("Tentando login admin", username);
-    fetch("https://as-production-e22a.up.railway.app/api/auth/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const data = await res.json();
-          setError(data.error || "Erro ao autenticar.");
-          console.log("Erro ao autenticar:", data);
-          return;
-        }
-        const data = await res.json();
-        console.log("Login admin bem-sucedido", data);
+    setLoading(true);
+    setError("");
+
+    console.log("Tentando login com:", { username, password });
+    console.log("API_URL:", API_URL);
+
+    try {
+      const res = await fetch(`${API_URL}/api/admin/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+      console.log("Resposta do servidor:", data);
+
+      if (!res.ok) {
+        setError(data.error || "Erro ao autenticar.");
+        setLoading(false);
+        return;
+      }
+
+      if (data.success && data.token) {
         // Salva dados do admin logado
         localStorage.setItem("isAdmin", "true");
-        localStorage.setItem("adminId", data.id);
+        localStorage.setItem("adminToken", data.token);
+        localStorage.setItem("adminId", String(data.id));
         localStorage.setItem("adminName", data.username);
         localStorage.setItem("userType", data.type);
-        setError("");
-        window.location.href = "/admin-panel";
-      })
-      .catch((err) => {
-        setError("Erro de conexão com o servidor.");
-        console.log("Erro de conexão:", err);
-      });
+
+        console.log("Login bem-sucedido! Redirecionando...");
+        setLoading(false);
+        navigate("/admin-panel");
+      } else {
+        setError("Erro: resposta inválida do servidor");
+        setLoading(false);
+      }
+    } catch (err) {
+      setError("Erro de conexão com o servidor.");
+      console.error("Erro:", err);
+      setLoading(false);
+    }
   }
 
   return (
-    <div className="p-5  flex flex-col gap-7 items-center justify-center  h-screen ">
-      <main className="w-full max-w-md mx-auto flex flex-col gap-6 bg-white rounded-2xl shadow p-6 items-center">
+    <div className="p-5 flex flex-col gap-7 items-center justify-center h-screen bg-gradient-to-b from-[#064648] to-[#0FA9AE]">
+      <main className="w-full max-w-md mx-auto flex flex-col gap-6 bg-white rounded-2xl shadow-lg p-6 items-center">
         <section className="flex flex-col items-center gap-5">
           <a href="/home">
             <img
@@ -48,23 +68,29 @@ export default function AdminLogin() {
               className="w-20 rounded-[50px] opacity-[80%]"
             />
           </a>
-          <h1 className="font-bold">Associação Salvação</h1>
+          <h1 className="font-bold text-lg">Associação Salvação</h1>
         </section>
+
         <h1 className="font-extrabold text-3xl text-center text-[#064648] mb-4">
           Login do Administrador
         </h1>
+
         <form className="flex flex-col gap-4 w-full" onSubmit={handleLogin}>
           <Input
             type="text"
             placeholder="Digite o usuário do administrador"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            disabled={loading}
+            required
           />
           <Input
             type="password"
             placeholder="Digite a senha do administrador"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+            required
           />
           {error && (
             <span className="text-red-600 text-sm font-semibold">{error}</span>
@@ -72,10 +98,10 @@ export default function AdminLogin() {
 
           <button
             type="submit"
-            className="bg-[#064648] text-white px-4 py-2 rounded-lg font-bold hover:bg-[#0a6c6c]"
-            onClick={handleLogin}
+            className="bg-[#064648] text-white px-4 py-2 rounded-lg font-bold hover:bg-[#0a6c6c] disabled:opacity-50 w-full"
+            disabled={loading}
           >
-            Entrar
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
       </main>
